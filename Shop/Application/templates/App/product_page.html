@@ -1,0 +1,50 @@
+{% extends 'App/layout.html' %}
+{% load static %}
+
+{% block title %} {{ product.name }} {% endblock title %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'App/css/product_page.css' %}">
+{% endblock head %}
+
+
+{% block content %}
+    <div class="container py-4">
+    <a href="{% url 'App:home' %}" class="btn btn-secondary mb-3">← Voltar</a>
+
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded shadow-sm mb-3 main-image">
+
+            <div class="d-flex flex-wrap gap-2 thumbnails">
+                {% for img in product.images.all %}
+                    <img src="{{ img.image.url }}" alt="Imagem Adicional" class="img-thumbnail thumb-image">
+                {% empty %}
+                    <p class="text-muted">Nenhuma imagem adicional disponível.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h1>{{ product.name }}</h1>
+            <p class="lead">{{ product.description }}</p>
+            <p class="fs-4 fw-bold text-primary">R$ {{ product.price }}</p>
+            <button class="btn btn-primary btn-lg">Adicionar ao Carrinho</button>
+            
+            <!-- Aqui você pode adicionar mais detalhes do produto, como estoque, SKU, etc -->
+            <hr>
+            <h5>Detalhes do Produto</h5>
+            <ul>
+                <li>Categoria: {{ product.category.name }}</li>
+                <li>SKU: {{ product.sku }}</li>
+                <li>Estoque: {{ product.stock }}</li>
+                <!-- Adicione outros campos que tiver -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+    <script src="{% static 'App/js/product_page.js' %}"></script>
+
+{% endblock content %}
