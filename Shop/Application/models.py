@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 import os
 
 def product_main_path(instance, filename):
@@ -28,3 +29,18 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f'Image from: Product ID {self.product.id}: {self.product.name} {self.product.sku}'
+
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    update_at = models.DateTimeField(auto_now=True)
+
+    def total(self):
+        return sum(item.total() for item in self.items.all())
+    
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity  = models.PositiveIntegerField(default=1)
+
+    def total(self):
+        return self.product.price * self.quantity

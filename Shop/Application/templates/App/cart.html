@@ -1,0 +1,46 @@
+{% extends 'App/layout.html' %}
+{% load static %}
+
+{% block title %}Carrinho de Compras{% endblock title %}
+
+{% block content %}
+<div class="container py-4">
+    <h2>Seu Carrinho</h2>
+
+    {% if items %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Total</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.product.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>R$ {{ item.product.price|floatformat:2 }}</td>
+                <td>R$ {{ item.total|floatformat:2 }}</td>
+                <td>
+                    <form method="post" action="{% url 'App:remove_from_cart' item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Remover</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4>Total geral: R$ {{ total|floatformat:2 }}</h4>
+
+    {% else %}
+    <p>Seu carrinho está vazio.</p>
+    <a href="{% url 'App:home' %}" class="btn btn-primary">Voltar à Loja</a>
+    {% endif %}
+</div>
+{% endblock content %}
