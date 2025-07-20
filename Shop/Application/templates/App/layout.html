@@ -41,19 +41,19 @@
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            <a class="nav-link" href="{% url 'App:logout' %}">Logout</a>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            <a class="nav-link" href="{% url 'App:login' %}">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Cadastro</a>
+                            <a class="nav-link" href="{% url 'App:register' %}">Cadastro</a>
                         </li>
                     {% endif %}
 
                     <li class="nav-item">
-                        <a class="nav-link position-relative" href="{% url 'App:cart' %}">
+                        <a class="nav-link position-relative" href="{% url 'App:cart_detail' %}">
                             🛒
                             <span
                                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

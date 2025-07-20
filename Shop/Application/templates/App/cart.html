@@ -26,7 +26,7 @@
                 <td>R$ {{ item.product.price|floatformat:2 }}</td>
                 <td>R$ {{ item.total|floatformat:2 }}</td>
                 <td>
-                    <form method="post" action="{% url 'App:remove_from_cart' item.id %}">
+                    <form method="post" action="{% url 'App:cart_remove' item.id %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-danger btn-sm">Remover</button>
                     </form>
@@ -42,5 +42,27 @@
     <p>Seu carrinho está vazio.</p>
     <a href="{% url 'App:home' %}" class="btn btn-primary">Voltar à Loja</a>
     {% endif %}
+
+    <div class="border rounded p-4 bg-white shadow">
+        <label class="form-label">Endereço de entrega:</label>
+        <select name="addresses" class="form-select">
+            {% for address in addresses %}
+                <option value="{{ address.id }}">{{ address.street }}, {{ address.number }} - {{ address.city }}/{{ address.state }}</option>
+            {% endfor %}
+        </select>
+        <a href="{% url 'App:address_page' %}">Gerenciar endereços</a>
+        
+        <br>
+
+        <label class="form-label">Forma de pagamento:</label>
+        <select name="pagment" class="form-select">
+            <option value="PIX">PIX</option>
+            <option value="credit-card">Cartão de Crédito</option>
+            <option value="debit-card-virtual">Cartão de Débito Virtual</option>
+        </select>
+
+        <button class="btn btn-primary">Seguir com a compra</button>
+
+    </div>
 </div>
 {% endblock content %}

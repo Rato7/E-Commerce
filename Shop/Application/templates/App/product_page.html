@@ -32,7 +32,7 @@
             <p class="lead">{{ product.description }}</p>
             <p class="fs-4 fw-bold text-primary">R$ {{ product.price }}</p>
                 
-            <form method="post" action="{% url 'App:add_to_cart' product.id %}">
+            <form method="post" action="{% url 'App:cart_add' product.id %}">
                 {% csrf_token %}
                 <div class="mb-3">
                     <label for="quantity" class="form-label">Quantidade:</label>
